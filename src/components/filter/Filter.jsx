@@ -10,6 +10,8 @@ const dispatch = useDispatch();
 const filter = useSelector(selectFilter);
 
 const handleFilterChange = filter => dispatch(setFilter(filter));
+// const handleFilterChange = (event) => dispatch(setFilter(event.target.value));
+
 
   return (
     <label className={css.labelfilter}>
