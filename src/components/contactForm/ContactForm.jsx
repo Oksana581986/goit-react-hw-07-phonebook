@@ -3,53 +3,74 @@ import { addContact } from '../../redux/operations';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import { selectContacts } from '../../redux/selectors';
+import { NotificationManager } from 'react-notifications';
 import css from './ContactForm.module.css';
 
 
-const ContactForm = () => {
-  const dispatch = useDispatch();
+export const ContactForm = () => {
+  const [name, setName] = useState('');
+  const [number, setNumber] = useState('');
   const contacts = useSelector(selectContacts);
-  const [name, setName] = useState(''); 
-  const [number, setNumber] = useState(''); 
+  const dispatch = useDispatch();
 
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    const lowerCaseName = name.toLowerCase();
-
-    if (contacts.some((contact) => contact.name.toLowerCase() === lowerCaseName)) {
-      alert(`${name} is already in contacts.`);
+  const handleChange = evt => {
+    const { name, value } = evt.target;
+    switch (name) {
+      case 'name':
+        setName(value);
+        break;
+      case 'number':
+        setNumber(value);
+        break;
+      default:
+        return;
+    }
+  };
+  const handleSubmit = evt => {
+    evt.preventDefault();
+    const contactExists = contacts.some(
+      contact => contact.name.toLowerCase() === name.toLowerCase()
+    );
+    if (contactExists) {
+      NotificationManager.info(`${name} is already in contacts.`);
       return;
     }
-
     dispatch(addContact({ name, number }));
     setName('');
     setNumber('');
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    name === 'name' ? setName(value) : setNumber(value);
-  };
-
   return (
-    <form className={css.formcontact} onSubmit={handleSubmit}>
-      <label className={css.labelname}>
-        Name:
-        <input className={css.inputname} type="text" name="name" value={name} onChange={handleChange} required />
+    <form className={css.form_wrapper} onSubmit={handleSubmit}>
+      <label className={css.label}>
+        Name
+        <input
+          className={css.input}
+          type="text"
+          name="name"
+          pattern="^[a-zA-Zа-яА-Я]+(([' \-][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+          title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+          value={name}
+          onChange={handleChange}
+          required
+        />
       </label>
-      <br />
-      <label className={css.labelnumber}>
-        Number:
-        <input className={css.inputnumber} type="tel" name="number" value={number} onChange={handleChange} required />
+      <label className={css.label}>
+        Number
+        <input
+          className={css.input}
+          type="tel"
+          name="number"
+          pattern="\+?\d{1,4}?[ .\-\s]?\(?\d{1,3}?\)?[ .\-\s]?\d{1,4}[ .\-\s]?\d{1,4}[ .\-\s]?\d{1,9}"
+          title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+          value={number}
+          onChange={handleChange}
+          required
+        />
       </label>
-      <br />
-      <button className={css.addcontact} type="submit">
+      <button className={css.button_add} type="submit">
         Add contact
       </button>
     </form>
   );
 };
-
-  export { ContactForm };

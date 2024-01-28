@@ -1,34 +1,54 @@
-.formcontact {
-    padding-left: 20px;
+.form_wrapper {
+    position: relative;
+    width: 300px;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 15px;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: orange;
+    box-shadow: 6px 6px 9px -1px rgba(0, 0, 0, 0.47);
+    -webkit-box-shadow: 6px 6px 9px -1px rgba(0, 0, 0, 0.47);
+    -moz-box-shadow: 6px 6px 9px -1px rgba(0, 0, 0, 0.47);
+    margin-bottom: 20px;
   }
   
-  .addcontact {
-      background-color: orange;
-      border-color: orange;
-      color:white;
-      border-radius: 10%;
-      cursor: pointer;
+  .input {
+    margin-left: 15px;
+    border-radius: 5px;
+    background-color: #f4f7d4;
+    border: 1px solid goldenrod;
+    padding: 3px;
   }
   
-  .addcontact:hover,
-  .addcontact:focus {
-      background-color:darkorange;
+  .input:hover,
+  .input:focus {
+    border: 1px solid green;
+  }
+  .button_add {
+    width: 100px;
+    height: 80px;
+    cursor: pointer;
+    border: 2px solid green;
+    border-radius: 10px;
+    box-shadow: 6px 6px 9px -1px rgba(0, 0, 0, 0.47);
+    -webkit-box-shadow: 6px 6px 9px -1px rgba(0, 0, 0, 0.47);
+    -moz-box-shadow: 6px 6px 9px -1px rgba(0, 0, 0, 0.47);
+    font-weight: 900;
+    background-color: green;
+    color: white;
+    font-family: italic;
   }
   
-  .labelname {
-  display: flex;
-  flex-direction: column;
+  .button_add:hover,
+  .button_add:focus {
+    cursor: pointer;
+    border: 2px solid purple;
+    background-color: purple;
+    border-radius: 10px;
   }
   
-  .labelnumber  {
-  display: flex;
-  flex-direction: column;
-  }
-  
-  .inputname {
-  width: 200px;
-  }
-  
-  .inputnumber {
-  width: 200px;
-  }

@@ -1,10 +1,16 @@
+import 'react-notifications/lib/notifications.css';
+import { NotificationContainer } from 'react-notifications';
+import { ContactsList } from './ContactsList/ContactsList';
+import { SectionTitle } from './SectionTitle/SectionTitle';
+import { SectionSubtitle } from './SectionSubtitle/SectionSubtitle';
+import { ContactForm } from './contactForm/ContactForm';
+import { ContactsFilter } from './filter/Filter';
+import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from "react-redux";
-import { ContactForm } from 'components/contactForm/ContactForm';
-import { ContactList } from 'components/contactList/ContactList';
-import { Filter } from 'components/filter/Filter';
 import { fetchContacts } from '../redux/operations';
-import { selectError, selectIsLoading } from "../redux/selectors";
+import { selectError, selectIsLoading } from '../redux/selectors';
+import css from './App.module.css';
+
 
 
 export const App = () => {
@@ -16,14 +22,16 @@ export const App = () => {
     dispatch(fetchContacts());
   }, [dispatch]);
 
+
   return (
-   <div>
-     <h1>Phonebook</h1>
-     <ContactForm />
-     {isLoading && !error && <b>Request in progress...</b>}
-     <h2>Contacts</h2>
-     <Filter />
-     <ContactList />
-   </div>
- );
+    <div className={css.container}>
+      <NotificationContainer />
+      <SectionTitle title="Phonebook" />
+      <ContactForm />
+      <SectionSubtitle subtitle="Contacts" />
+      <ContactsFilter />
+      {isLoading && !error && <b>Request in progress...</b>}
+      <ContactsList />
+    </div>
+  );
 };
