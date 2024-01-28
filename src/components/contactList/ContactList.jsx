@@ -7,11 +7,10 @@ import css from './ContactList.module.css';
 
   const ContactList = () => {
   const dispatch = useDispatch();
- 
   const filteredContacts = useSelector(selectVisibleContacts);
 
   const handleDeleteContact = (contactId) => dispatch(deleteContact(contactId));
- 
+  
 return (
     <div>
        <ul>

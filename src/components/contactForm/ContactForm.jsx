@@ -9,7 +9,6 @@ import css from './ContactForm.module.css';
 const ContactForm = () => {
   const dispatch = useDispatch();
   const contacts = useSelector(selectContacts);
-
   const [name, setName] = useState(''); 
   const [number, setNumber] = useState(''); 
 
@@ -24,8 +23,7 @@ const ContactForm = () => {
       return;
     }
 
-    const newContact = { name, number };
-    dispatch(addContact(newContact));
+    dispatch(addContact({ name, number }));
     setName('');
     setNumber('');
   };

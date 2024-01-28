@@ -1,41 +1,43 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import {
+  fetchAllContacts,
+  addContactData,
+  deleteContactData,
+} from '../redux/services/services';
 
 
-axios.defaults.baseURL = "https://65b16527d16d31d11bded3fe.mockapi.io";
-
-export const fetchContacts =  createAsyncThunk(
-    "contacts/fetchAll",
-    async (_, thunkAPI) => {
-      try {
-        const response = await axios.get("/contacts");
-        return response.data;
-      } catch (error) {
-        return thunkAPI.rejectWithValue(error.message);
-      }
+export const fetchContacts = createAsyncThunk(
+  'contacts/fetchAllContacts',
+  async (_, thunkAPI) => {
+    try {
+      const response = await fetchAllContacts();
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
     }
-  );
-  
-  export const addContact = createAsyncThunk(
-    "contacts/addContact",
-    async (contactId, thunkAPI) => {
-      try {
-        const response = await axios.post(`/contacts/${contactId}`);
-        return response.data;
-      } catch (error) {
-        return thunkAPI.rejectWithValue(error.message);
-      }
-    }
-  );
+  }
+);
 
-  export const deleteContact = createAsyncThunk(
-    "contacts/deleteContact",
-    async (contactId, thunkAPI) => {
-      try {
-        const response = await axios.delete(`/contacts/${contactId}`);
-        return response.data;
-      } catch (error) {
-        return thunkAPI.rejectWithValue(error.message);
-      }
+export const addContact = createAsyncThunk(
+  'contacts/addContact',
+  async ({ name, number }, thunkAPI) => {
+    try {
+      const response = await addContactData({ name, number });
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
     }
-  );
+  }
+);
+addContact();
+export const deleteContact = createAsyncThunk(
+  'contacts/deleteContact',
+  async (contactId, thunkAPI) => {
+    try {
+      const response = await deleteContactData({ contactId });
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
